@@ -2,28 +2,56 @@ import React, { useState } from "react";
 import { CommentList } from "./CommentList";
 import { CommentForm } from "./CommentForm";
 import { CommentType } from "../../types";
+import { deleteItem } from "../../library/indexedDB";
 
-export const Comment: React.FC<{
+type CommentProps = {
   comment: CommentType;
   level: number;
   fetchComments: () => void;
-}> = ({ comment, level, fetchComments }) => {
+};
+
+export const Comment: React.FC<CommentProps> = ({
+  comment,
+  level,
+  fetchComments,
+}) => {
   const [showForm, setShowForm] = useState(false);
+
+  const handleDelete = async () => {
+    try {
+      await deleteItem(comment.id);
+      await fetchComments();
+    } catch (error) {
+      console.error("Failed to delete comment: ", error);
+    }
+  };
 
   return (
     <div className={"w-full p-4 rounded-lg p-2"}>
       <p className="text-lg mb-2">{comment.content}</p>
 
-      <p
-        onClick={() => setShowForm(!showForm)}
-        className="text-sky-600 text-xs cursor-pointer hover:underline"
-      >
-        Reply
-      </p>
+      <div className="flex justify-between">
+        <span
+          onClick={() => setShowForm(!showForm)}
+          className="text-sky-600 text-xs cursor-pointer hover:underline"
+        >
+          Reply
+        </span>
+        <span
+          className="hover:underline text-red-500 text-xs cursor-pointer"
+          onClick={handleDelete}
+        >
+          delete
+        </span>
+      </div>
 
       {showForm && (
         <div className="mt-4">
-          <CommentForm parentId={comment.id} fetchComments={fetchComments} />
+          <CommentForm
+            setShowForm={setShowForm}
+            parentId={comment.id}
+            fetchComments={fetchComments}
+          />
         </div>
       )}
 
