@@ -46,6 +46,10 @@ function App() {
     }
   }, [fetchComments]);
 
+  useEffect(() => {
+    fetchComments()
+  }, [fetchComments])
+
   return (
     <div className="flex flex-col m-auto max-w-4xl mt-40 content-center p-10">
       <CommentForm parentId={null} fetchComments={fetchComments} />
