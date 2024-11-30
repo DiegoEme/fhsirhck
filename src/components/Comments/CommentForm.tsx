@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
-import { addItem } from '../../library/indexedDB';
+import React, { useState } from "react";
+import { addItem } from "../../library/indexedDB";
 
-export const CommentForm: React.FC<{ parentId?: number }> = ({ parentId }) => {
-  const [content, setContent] = useState('');
+type CommentFormProps = { parentId: number | null; fetchComments: () => void };
+
+export const CommentForm: React.FC<CommentFormProps> = ({
+  parentId,
+  fetchComments,
+}) => {
+  const [content, setContent] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      await addItem({content});
+      await addItem({ content, parentId });
+      await fetchComments();
     } catch (error) {
-      console.error('Failed to add comment: ', error);
-    } finally{
-      setContent('');
+      console.error("Failed to add comment: ", error);
+    } finally {
+      setContent("");
     }
   };
 
@@ -21,7 +27,7 @@ export const CommentForm: React.FC<{ parentId?: number }> = ({ parentId }) => {
       <input
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        placeholder={parentId ? 'Reply...' : 'Add a comment...'}
+        placeholder={parentId ? "Reply..." : "Add a comment..."}
       />
       <button type="submit">Submit</button>
     </form>
