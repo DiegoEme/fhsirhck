@@ -23,13 +23,22 @@ export const CommentForm: React.FC<CommentFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className="flex items-center w-full rounded-lg p-2 shadow-sm space-x-2"
+    >
       <input
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder={parentId ? "Reply..." : "Add a comment..."}
+        className="flex-grow px-3 py-4 border-none focus:outline-none frounded-lg"
       />
-      <button type="submit">Submit</button>
+      <button
+        type="submit"
+        className="bg-sky-800 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition"
+      >
+        Submit
+      </button>
     </form>
   );
 };

@@ -11,22 +11,24 @@ export const Comment: React.FC<{
   const [showForm, setShowForm] = useState(false);
 
   return (
-    <div>
-      <p>
-        {comment.content}{" "}
-        <span style={{ fontSize: "12px", color: "#818384" }}>
-          Level {level}
-        </span>
+    <div className={"w-full p-4 rounded-lg p-2"}>
+      <p className="text-lg mb-2">{comment.content}</p>
+
+      <p
+        onClick={() => setShowForm(!showForm)}
+        className="text-sky-600 text-xs cursor-pointer hover:underline"
+      >
+        Reply
       </p>
-      <p onClick={() => setShowForm(!showForm)}>Reply</p>
+
       {showForm && (
-        <div>
+        <div className="mt-4">
           <CommentForm parentId={comment.id} fetchComments={fetchComments} />
         </div>
       )}
 
-      {comment.replies && (
-        <div style={{ marginTop: "20px" }}>
+      {comment.replies && comment.replies.length > 0 && (
+        <div className="mt-4 pl-6 border-l-2 border-gray-100">
           <CommentList
             allComments={comment.replies}
             level={level + 1}
