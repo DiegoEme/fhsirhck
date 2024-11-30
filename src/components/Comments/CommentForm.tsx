@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { addItem } from "../../library/indexedDB";
+import { addItem, notifyCommentUpdate } from "../../library/indexedDB";
 
 type CommentFormProps = {
   parentId: number | null;
@@ -28,7 +28,8 @@ export const CommentForm: React.FC<CommentFormProps> = ({
 
     try {
       await addItem({ content, parentId });
-      await fetchComments();
+      notifyCommentUpdate()
+      await fetchComments()
       if (setShowForm) setShowForm(false);
     } catch (error) {
       console.error("Failed to add comment: ", error);

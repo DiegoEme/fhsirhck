@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { CommentForm } from "./components/Comments/CommentForm";
 import { CommentList } from "./components/Comments/CommentList";
-import { getAllItems } from "./library/indexedDB";
+import { commentChannel, getAllItems } from "./library/indexedDB";
 import { CommentType } from "./types";
 
 function App() {
@@ -39,7 +39,11 @@ function App() {
   }, [preprocessComments]);
 
   useEffect(() => {
-    fetchComments();
+    commentChannel.onmessage = async (event) => {
+      if (event.data === 'comment_updated') {
+        await fetchComments();
+      }
+    }
   }, [fetchComments]);
 
   return (

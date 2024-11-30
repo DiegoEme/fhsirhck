@@ -39,3 +39,10 @@ export const deleteItem = async (id: number):  Promise<void> => {
   await tx.store.delete(id);
   await tx.done;
 };
+
+export const commentChannel = new BroadcastChannel('comments_channel');
+
+export const notifyCommentUpdate = () => {
+  commentChannel.postMessage('comment_updated');
+};
+

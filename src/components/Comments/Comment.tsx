@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CommentList } from "./CommentList";
 import { CommentForm } from "./CommentForm";
 import { CommentType } from "../../types";
-import { deleteItem } from "../../library/indexedDB";
+import { deleteItem, notifyCommentUpdate } from "../../library/indexedDB";
 
 type CommentProps = {
   comment: CommentType;
@@ -26,6 +26,7 @@ export const Comment: React.FC<CommentProps> = ({
   const handleDelete = async () => {
     try {
       await recDelete(comment);
+      notifyCommentUpdate()
       await fetchComments();
     } catch (error) {
       console.error("Failed to delete comment: ", error);
