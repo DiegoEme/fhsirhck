@@ -17,9 +17,22 @@ export const Comment: React.FC<CommentProps> = ({
 }) => {
   const [showForm, setShowForm] = useState(false);
 
+  async function recDelete(comment: CommentType) {
+    if (comment.replies == undefined || comment.replies.length == 0) {
+      await deleteItem(comment.id);
+      return;
+    }
+
+    for (const item of comment.replies) {
+      recDelete(item);
+    }
+
+    deleteItem(comment.id);
+  }
+
   const handleDelete = async () => {
     try {
-      await deleteItem(comment.id);
+      await recDelete(comment);
       await fetchComments();
     } catch (error) {
       console.error("Failed to delete comment: ", error);
