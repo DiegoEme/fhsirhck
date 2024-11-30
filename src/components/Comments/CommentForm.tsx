@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { addItem } from "../../library/indexedDB";
 
 type CommentFormProps = {
@@ -13,6 +13,13 @@ export const CommentForm: React.FC<CommentFormProps> = ({
   setShowForm,
 }) => {
   const [content, setContent] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +43,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({
       className="flex items-center w-full rounded-lg p-2 shadow-sm space-x-2"
     >
       <input
+        ref={inputRef}
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder={parentId ? "Reply..." : "Add a comment..."}
