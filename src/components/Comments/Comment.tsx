@@ -6,13 +6,11 @@ import { deleteItem } from "../../library/indexedDB";
 
 type CommentProps = {
   comment: CommentType;
-  level: number;
   fetchComments: () => void;
 };
 
 export const Comment: React.FC<CommentProps> = ({
   comment,
-  level,
   fetchComments,
 }) => {
   const [showForm, setShowForm] = useState(false);
@@ -40,7 +38,7 @@ export const Comment: React.FC<CommentProps> = ({
   };
 
   return (
-    <div className={"w-full p-4 rounded-lg p-2"}>
+    <div className={"w-full p-4 rounded-lg"}>
       <p className="text-lg mb-2">{comment.content}</p>
 
       <div className="flex justify-between">
@@ -72,7 +70,6 @@ export const Comment: React.FC<CommentProps> = ({
         <div className="mt-4 pl-6 border-l-2 border-gray-100">
           <CommentList
             allComments={comment.replies}
-            level={level + 1}
             fetchComments={fetchComments}
           />
         </div>

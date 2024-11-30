@@ -4,13 +4,11 @@ import { CommentType } from "../../types";
 
 type CommentListProps = {
   allComments: CommentType[];
-  level: number;
   fetchComments: () => void;
 };
 
 export const CommentList: React.FC<CommentListProps> = ({
   allComments,
-  level,
   fetchComments,
 }) => {
   return (
@@ -20,7 +18,6 @@ export const CommentList: React.FC<CommentListProps> = ({
           fetchComments={fetchComments}
           key={comment.id}
           comment={comment}
-          level={level}
         />
       ))}
     </div>

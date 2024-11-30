@@ -49,7 +49,6 @@ function App() {
       <CommentList
         allComments={allComments}
         fetchComments={fetchComments}
-        level={0}
       />
     </div>
   );
