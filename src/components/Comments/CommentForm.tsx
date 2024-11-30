@@ -12,7 +12,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({
   fetchComments,
   setShowForm,
 }) => {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {

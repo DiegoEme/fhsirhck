@@ -13,19 +13,14 @@ export const Comment: React.FC<CommentProps> = ({
   comment,
   fetchComments,
 }) => {
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState<boolean>(false);
 
-  async function recDelete(comment: CommentType) {
-    if (comment.replies == undefined || comment.replies.length == 0) {
-      await deleteItem(comment.id);
-      return;
+  async function recDelete(comment: CommentType): Promise<void> {
+    if (comment.replies && comment.replies.length > 0) {
+      await Promise.all(comment.replies.map(recDelete));
     }
-
-    for (const item of comment.replies) {
-      recDelete(item);
-    }
-
-    deleteItem(comment.id);
+  
+    await deleteItem(comment.id);
   }
 
   const handleDelete = async () => {

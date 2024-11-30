@@ -1,4 +1,3 @@
-// import "./App.css";
 import { useCallback, useEffect, useState } from "react";
 import { CommentForm } from "./components/Comments/CommentForm";
 import { CommentList } from "./components/Comments/CommentList";
@@ -46,10 +45,7 @@ function App() {
   return (
     <div className="flex flex-col m-auto max-w-4xl mt-40 content-center p-10">
       <CommentForm parentId={null} fetchComments={fetchComments} />
-      <CommentList
-        allComments={allComments}
-        fetchComments={fetchComments}
-      />
+      <CommentList allComments={allComments} fetchComments={fetchComments} />
     </div>
   );
 }
